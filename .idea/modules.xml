@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/yandex_ToDoList_New.iml" filepath="$PROJECT_DIR$/yandex_ToDoList_New.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/java-kanban11.iml" filepath="$PROJECT_DIR$/.idea/java-kanban11.iml" />
     </modules>
   </component>
 </project>
