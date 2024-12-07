@@ -21,7 +21,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
 
 
-
+// убрана старая коллекция
 
     @Override
     public void add(Task task) {
