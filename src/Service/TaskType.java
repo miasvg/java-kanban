@@ -1,2 +1,7 @@
-package src.Service;public enum TaskType {
+package src.Service;
+
+public enum TaskType {
+    TASK,
+    EPIC,
+    SUBTASK
 }
