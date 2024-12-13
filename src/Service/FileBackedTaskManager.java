@@ -39,16 +39,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String description = parts[4];
         int epicId = (parts.length > 5 && !parts[5].isEmpty()) ? Integer.parseInt(parts[5]) : -1;
 
-        switch (type) {
-            case TASK:
-                return new Task(name, description, status);
-            case EPIC:
-                return new Epic(name, description);
-            case SUBTASK:
-                return new Subtask(name, description, epicId);
-            default:
-                throw new IllegalArgumentException("Unknown task type: " + type);
-        }
+        return switch (type) {
+            case TASK -> new Task(name, description, status);
+            case EPIC -> new Epic(name, description);
+            case SUBTASK -> new Subtask(name, description, epicId);
+            default -> throw new IllegalArgumentException("Unknown task type: " + type);
+        };
     }
 
     // Метод для автосохранения
