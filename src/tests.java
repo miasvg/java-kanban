@@ -1,4 +1,5 @@
 package src;
+
 import org.junit.jupiter.api.Test;
 import src.Models.Epic;
 import src.Models.Subtask;
@@ -6,6 +7,8 @@ import src.Models.Task;
 import src.Models.TaskStatus;
 import src.Service.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -223,4 +226,61 @@ public class tests {
 
         assertEquals(2, historyManager.getHistory().size(), "History should not contain duplicates");
     }
+    @Test
+    void testTaskType() {
+        Task task = new Task("Task 1", "Description", TaskStatus.NEW);
+        assertEquals(TaskType.TASK, task.getType(), "Task type should be TASK by default");
+
+        task.setType(TaskType.EPIC);  // Меняем тип задачи
+        assertEquals(TaskType.EPIC, task.getType(), "Task type should be changed to EPIC");
+    }
+    @Test
+    void testSaveAndLoadEmptyFile() throws IOException {
+        File tempFile = File.createTempFile("test", ".txt");
+        tempFile.deleteOnExit();  // Удалить файл при завершении программы
+
+        FileBackedTaskManager manager = new FileBackedTaskManager(tempFile);
+        manager.save();  // Сохраняем пустой менеджер
+
+        FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(tempFile);
+        assertTrue(loadedManager.getTasks().isEmpty(), "Loaded manager should have no tasks");
+    }
+    @Test
+    void testSaveMultipleTasks() throws IOException {
+        File tempFile = File.createTempFile("test", ".txt");
+        tempFile.deleteOnExit();
+
+        FileBackedTaskManager manager = new FileBackedTaskManager(tempFile);
+
+        Task task1 = new Task("Task 1", "Description", TaskStatus.NEW);
+        Task task2 = new Task("Task 2", "Description", TaskStatus.IN_PROGRESS);
+        manager.addNewTask(task1);
+        manager.addNewTask(task2);
+
+        manager.save();  // Сохраняем задачи
+
+        FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(tempFile);
+        assertEquals(2, loadedManager.getTasks().size(), "Loaded manager should have 2 tasks");
+    }
+    @Test
+    void testLoadMultipleTasks() throws IOException {
+        File tempFile = File.createTempFile("test", ".txt");
+        tempFile.deleteOnExit();
+
+        // Сохраняем несколько задач
+        FileBackedTaskManager manager = new FileBackedTaskManager(tempFile);
+        Task task1 = new Task("Task 1", "Description", TaskStatus.NEW);
+        Task task2 = new Task("Task 2", "Description", TaskStatus.IN_PROGRESS);
+        manager.addNewTask(task1);
+        manager.addNewTask(task2);
+        manager.save();
+
+        // Загружаем из файла и проверяем количество задач
+        FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(tempFile);
+        assertEquals(2, loadedManager.getTasks().size(), "Loaded manager should have 2 tasks");
+    }
+
+
+
 }
+

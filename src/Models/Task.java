@@ -1,5 +1,7 @@
 package src.Models;
 
+import src.Service.TaskType;
+
 import java.util.Objects;
 
 public class Task {
@@ -7,6 +9,7 @@ public class Task {
     protected String description;
     protected int id;
     protected  TaskStatus status;
+    protected TaskType type;
 
 
     public Task(String name, String description, TaskStatus aNew) {
@@ -25,6 +28,7 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
+    public TaskType getType(){return type;}
 
     public Task() {
     }
@@ -64,5 +68,9 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    public void setType(TaskType taskType) {
+        this.type = type;
     }
 }
