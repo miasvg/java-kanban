@@ -17,27 +17,18 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private final File file;
 
-
     public FileBackedTaskManager(File file) {
         this.file = file;
     }
 
-
     // Метод для преобразования задачи в строку
     public String toString(Task task) {
-        String epicId = (task instanceof Subtask) ? String.valueOf(((Subtask) task).getEpicId()) : "";
-        return String.format("%d,%s,%s,%s,%s,%s",
-                task.getId(),
-                task.getType(),
-                task.getName(),
-                task.getStatus(),
-                task.getDescription(),
-                epicId);
+        return task.toString();
     }
-
 
     // Метод для восстановления задачи из строки
     public Task fromString(String line) {
+
         String[] parts = line.split(",");
         int id = Integer.parseInt(parts[0]);
         TaskType type = TaskType.valueOf(parts[1]);
@@ -46,34 +37,27 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String description = parts[4];
         int epicId = (parts.length > 5 && !parts[5].isEmpty()) ? Integer.parseInt(parts[5]) : -1;
 
-
         return switch (type) {
-            case TASK -> new Task(name, description, status);
-            case EPIC -> new Epic(name, description);
-            case SUBTASK -> new Subtask(name, description, epicId);
+            case TASK ->  new Task(name, description, status);
+            case EPIC ->  new Epic(name, description);
+            case SUBTASK ->   new Subtask(name, description, epicId);
         };
     }
-
 
     // Метод для автосохранения
     public void save() {
         try (BufferedWriter writer = Files.newBufferedWriter(file.toPath())) {
             writer.write("id,type,name,status,description,epic\n");
 
-
-
-
             for (Task task : getTasks()) {
                 writer.write(toString(task));
                 writer.newLine();
             }
 
-
             for (Epic epic : getEpics()) {
                 writer.write(toString(epic));
                 writer.newLine();
             }
-
 
             for (Subtask subtask : getSubtasks()) {
                 writer.write(toString(subtask));
@@ -107,6 +91,41 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
         return id;
     }
+    @Override
+    public void updateTask(Task task) {
+        super.updateTask(task);
+        save();
+    }
+
+    @Override
+    public void updateEpic(Epic epic) {
+        super.updateEpic(epic);
+        save();
+    }
+
+    @Override
+    public void updateSubtask(Subtask subtask) {
+        super.updateSubtask(subtask);
+        save();
+    }
+
+    @Override
+    public void deleteTask(int id) {
+        super.deleteTask(id);
+        save();
+    }
+
+    @Override
+    public void deleteEpic(int id) {
+        super.deleteEpic(id);
+        save();
+    }
+
+    @Override
+    public void deleteSubtask(int id) {
+        super.deleteSubtask(id);
+        save();
+    }
 
 
     //  метод для загрузки данных из файла
@@ -126,18 +145,17 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
 
                 // В зависимости от типа задачи добавляем её в правильный список
-                if (task instanceof Epic) {
-                    manager.addNewEpic((Epic) task);
-                } else if (task instanceof Subtask) {
-                    manager.addNewSubtask((Subtask) task);
-                } else if (task != null) {
-                    manager.addNewTask(task);
+                switch (task.getType()) {
+                    case EPIC -> manager.addNewEpic((Epic) task);
+                    case SUBTASK -> manager.addNewSubtask((Subtask) task);
+                    case TASK -> manager.addNewTask(task);
+                    default -> throw new IllegalArgumentException("Unknown task type: " + task.getType());
                 }
             }
+
         } catch (IOException e) {
             throw new ManagerSaveException("Error loading tasks from file", e);
         }
-
 
         return manager;
     }

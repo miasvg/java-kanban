@@ -14,7 +14,6 @@ public class Task {
 
     public Task(String name, String description, TaskStatus aNew) {
         this.status = TaskStatus.NEW;
-
     }
     public String getName() {
         return name;
@@ -62,13 +61,14 @@ public class Task {
     }
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                '}';
+        return String.format("%d,%s,%s,%s,%s,",
+                getId(),
+                getType(),
+                getName(),
+                getStatus(),
+                getDescription());
     }
+
 
     public void setType(TaskType taskType) {
         this.type = type;

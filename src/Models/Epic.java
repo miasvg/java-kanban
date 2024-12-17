@@ -24,13 +24,9 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "src.Models.Epic{" +
-                "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", status=" + getStatus() +
-                '}';
+        return super.toString();
     }
+
 
 
 }
