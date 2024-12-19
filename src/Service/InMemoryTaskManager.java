@@ -19,7 +19,7 @@ public class InMemoryTaskManager implements TaskManager {
     private static int allTasksId = 0;
 
     @Override
-    public  List<Task> getTasks() {
+    public List<Task> getTasks() {
         return new ArrayList<>(tasks.values());
 
     }
@@ -44,7 +44,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public  Task getTask(int id) {
+    public Task getTask(int id) {
         Task task = tasks.get(id);
         if (task != null) {
             historyManager.add(task);  // Добавляем задачу в историю
@@ -71,7 +71,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public  int addNewTask(Task task) {
+    public int addNewTask(Task task) {
         task.setId(allTasksId++);
         tasks.put(task.getId(), task);
         return task.getId();
@@ -83,9 +83,6 @@ public class InMemoryTaskManager implements TaskManager {
         epics.put(epic.getId(), epic);
         return epic.getId();
     }
-
-
-
 
 
     @Override
@@ -180,11 +177,11 @@ public class InMemoryTaskManager implements TaskManager {
         }
         subtasks.clear();
     }
+
     @Override
     public void deleteEpics() {
         for (Epic epic : epics.values()) {
             historyManager.remove(epic.getId());
-
 
             for (Subtask subtask : subtasks.values()) {
                 if (subtask.getEpicId() == epic.getId()) {
@@ -193,11 +190,9 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
 
-
         epics.clear();
         subtasks.clear();
     }
-
 
 
     public void updateStatus(Epic epic) {

@@ -8,7 +8,7 @@ public class Task {
     protected String name;
     protected String description;
     protected int id;
-    protected  TaskStatus status;
+    protected TaskStatus status;
     protected TaskType type;
 
 
@@ -27,26 +27,15 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
-    public TaskType getType(){return type;}
+    public TaskType getType() {return type;}
+    public int getId() {return id;}
 
-    public Task() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public TaskStatus getStatus() {
-        return status;
-
-    }
-
+    public TaskStatus getStatus() {return status;}
     public void setId(int id) {
         this.id = id;
     }
+    public void setStatus(TaskStatus taskStatus) {}
 
-    public void setStatus(TaskStatus taskStatus) {
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,6 +48,7 @@ public class Task {
     public int hashCode() {
         return Objects.hash(id);
     }
+
     @Override
     public String toString() {
         return String.format("%d,%s,%s,%s,%s,",
@@ -68,7 +58,6 @@ public class Task {
                 getStatus(),
                 getDescription());
     }
-
 
     public void setType(TaskType taskType) {
         this.type = type;

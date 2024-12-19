@@ -9,15 +9,11 @@ public class Epic extends Task {
     public Epic(String name, String description) {
         super(name, description, TaskStatus.NEW);
         this.subtasks = new ArrayList<>();
-
     }
-
 
     public void addSubtask(Subtask subtask) {
         subtasks.add(subtask);
     }
-
-
     public ArrayList<Subtask> getSubtasks() {
         return subtasks;
     }
@@ -26,7 +22,6 @@ public class Epic extends Task {
     public String toString() {
         return super.toString();
     }
-
 
 
 }

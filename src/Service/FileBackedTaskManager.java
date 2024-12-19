@@ -11,21 +11,17 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-
 public class FileBackedTaskManager extends InMemoryTaskManager {
-
 
     private final File file;
 
     public FileBackedTaskManager(File file) {
         this.file = file;
     }
-
     // Метод для преобразования задачи в строку
     public String toString(Task task) {
         return task.toString();
     }
-
     // Метод для восстановления задачи из строки
     public Task fromString(String line) {
 
@@ -38,9 +34,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         int epicId = (parts.length > 5 && !parts[5].isEmpty()) ? Integer.parseInt(parts[5]) : -1;
 
         return switch (type) {
-            case TASK ->  new Task(name, description, status);
-            case EPIC ->  new Epic(name, description);
-            case SUBTASK ->   new Subtask(name, description, epicId);
+            case TASK -> new Task(name, description, status);
+            case EPIC -> new Epic(name, description);
+            case SUBTASK -> new Subtask(name, description, epicId);
         };
     }
 
@@ -91,6 +87,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
         return id;
     }
+
     @Override
     public void updateTask(Task task) {
         super.updateTask(task);
@@ -127,23 +124,17 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
     }
 
-
     //  метод для загрузки данных из файла
     public static FileBackedTaskManager loadFromFile(File file) {
-        FileBackedTaskManager manager = new FileBackedTaskManager(file);
-
+        FileBackedTaskManager manager = Managers.getFileBackedManager(file);
 
         try {
             // Считываем все строки из файла
             List<String> lines = Files.readAllLines(file.toPath());
-
-
             // Пропускаем заголовок (первая строка)
             for (String line : lines.subList(1, lines.size())) {
                 // Преобразуем строку в объект задачи
                 Task task = manager.fromString(line);
-
-
                 // В зависимости от типа задачи добавляем её в правильный список
                 switch (task.getType()) {
                     case EPIC -> manager.addNewEpic((Epic) task);
@@ -152,11 +143,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     default -> throw new IllegalArgumentException("Unknown task type: " + task.getType());
                 }
             }
-
         } catch (IOException e) {
             throw new ManagerSaveException("Error loading tasks from file", e);
         }
-
         return manager;
     }
 }
