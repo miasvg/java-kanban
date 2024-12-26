@@ -24,5 +24,4 @@ public class Subtask extends Task {
         return String.format("%s%d", super.toString(), getEpicId());
     }
 
-
 }

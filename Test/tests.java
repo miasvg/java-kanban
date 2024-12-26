@@ -387,6 +387,85 @@ public class tests {
             assertNotEquals(task1Id, task2Id, "Task IDs should not conflict");
             assertNotEquals(loadedManager.getTask(task1Id).getId(), loadedManager.getTask(task2Id).getId(), "Loaded tasks IDs should not conflict");
         }
+    @Test
+    void testEpicStatusWithAllNewSubtasks() {
+        Epic epic = new Epic("Epic", "Description");
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        int epicId = taskManager.addNewEpic(epic);
+
+        Subtask subtask1 = new Subtask("Subtask 1", "Description", epicId);
+        Subtask subtask2 = new Subtask("Subtask 2", "Description", epicId);
+
+        taskManager.addNewSubtask(subtask1);
+        taskManager.addNewSubtask(subtask2);
+
+        assertEquals(TaskStatus.NEW, taskManager.getEpic(epicId).getStatus(), "Epic status should be NEW when all subtasks are NEW");
+    }
+
+    @Test
+    void testEpicStatusWithAllDoneSubtasks() {
+        Epic epic = new Epic("Epic", "Description");
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        int epicId = taskManager.addNewEpic(epic);
+
+        Subtask subtask1 = new Subtask("Subtask 1", "Description", epicId);
+        subtask1.setStatus(TaskStatus.DONE);
+        Subtask subtask2 = new Subtask("Subtask 2", "Description", epicId);
+        subtask2.setStatus(TaskStatus.DONE);
+
+        taskManager.addNewSubtask(subtask1);
+        taskManager.addNewSubtask(subtask2);
+
+        assertEquals(TaskStatus.DONE, taskManager.getEpic(epicId).getStatus(), "Epic status should be DONE when all subtasks are DONE");
+    }
+
+    @Test
+    void testEpicStatusWithMixedSubtasks() {
+        Epic epic = new Epic("Epic", "Description");
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        int epicId = taskManager.addNewEpic(epic);
+
+        Subtask subtask1 = new Subtask("Subtask 1", "Description", epicId);
+        subtask1.setStatus(TaskStatus.NEW);
+        Subtask subtask2 = new Subtask("Subtask 2", "Description", epicId);
+        subtask2.setStatus(TaskStatus.DONE);
+
+        taskManager.addNewSubtask(subtask1);
+        taskManager.addNewSubtask(subtask2);
+
+        assertEquals(TaskStatus.IN_PROGRESS, taskManager.getEpic(epicId).getStatus(), "Epic status should be IN_PROGRESS when subtasks are mixed NEW and DONE");
+    }
+
+    @Test
+    void testEpicStatusWithAllInProgressSubtasks() {
+        Epic epic = new Epic("Epic", "Description");
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        int epicId = taskManager.addNewEpic(epic);
+
+        Subtask subtask1 = new Subtask("Subtask 1", "Description", epicId);
+        subtask1.setStatus(TaskStatus.IN_PROGRESS);
+        Subtask subtask2 = new Subtask("Subtask 2", "Description", epicId);
+        subtask2.setStatus(TaskStatus.IN_PROGRESS);
+
+        taskManager.addNewSubtask(subtask1);
+        taskManager.addNewSubtask(subtask2);
+
+        assertEquals(TaskStatus.IN_PROGRESS, taskManager.getEpic(epicId).getStatus(), "Epic status should be IN_PROGRESS when all subtasks are IN_PROGRESS");
+    }
+    @Test
+    void testFileLoadException() {
+        assertThrows(IOException.class, () -> {
+            FileBackedTaskManager.loadFromFile(new File("nonexistent.csv"));
+        }, "Loading from a non-existent file should throw IOException");
+    }
+
+    @Test
+    void testSaveDoesNotThrowException() {
+        assertDoesNotThrow(() -> {
+            FileBackedTaskManager manager = Managers.getFileBackedManager(new File("tasks.csv"));
+            manager.save();
+        }, "Saving should not throw exceptions");
+    }
 
     }
 

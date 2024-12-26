@@ -5,16 +5,14 @@ import src.Models.Subtask;
 import src.Models.Task;
 import src.Models.TaskStatus;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
     private static final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
+    private final NavigableSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime, Comparator.nullsLast(Comparator.naturalOrder())));
     private static final HistoryManager historyManager = Managers.getDefaultHistory(); // Используем HistoryManager
     private static int allTasksId = 0;
 
@@ -74,6 +72,9 @@ public class InMemoryTaskManager implements TaskManager {
     public int addNewTask(Task task) {
         task.setId(allTasksId++);
         tasks.put(task.getId(), task);
+        if (!isTaskOverlapping(task)){
+            prioritizedTasks.add(task);
+        }
         return task.getId();
     }
 
@@ -95,6 +96,9 @@ public class InMemoryTaskManager implements TaskManager {
         epic.getSubtasks().add(subtask);
         subtasks.put(subtask.getId(), subtask);
         updateStatus(epic);
+        if (!isTaskOverlapping(subtask)){
+            prioritizedTasks.add(subtask);
+        }
         return subtask.getId();
     }
 
@@ -134,6 +138,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteTask(int id) {
         tasks.remove(id);
         historyManager.remove(id);
+        prioritizedTasks.remove(id);
     }
 
     @Override
@@ -156,6 +161,7 @@ public class InMemoryTaskManager implements TaskManager {
             updateStatus(epic);
         }
         historyManager.remove(id);
+        prioritizedTasks.remove(subtask);
     }
 
     @Override
@@ -221,4 +227,36 @@ public class InMemoryTaskManager implements TaskManager {
             epic.setStatus(TaskStatus.IN_PROGRESS);
         }
     }
-}
+    public List<Task> getPrioritizedTasks() {
+        return new ArrayList<>(prioritizedTasks);
+    }
+    private boolean areTasksOverlapping(Task task1, Task task2) {
+        return !(task1.getEndTime().isBefore(task2.getStartTime()) ||
+                task1.getStartTime().isAfter(task2.getEndTime()));
+    }
+    public boolean isTaskOverlapping(Task newTask) {
+        if (newTask.getStartTime() == null || newTask.getEndTime() == null) {
+            return false; // Если у новой задачи нет времени, пересечения быть не может
+        }
+
+        // Получаем ближайшие задачи до и после новой задачи
+        Task lowerTask = prioritizedTasks.lower(newTask);
+        Task higherTask = prioritizedTasks.higher(newTask);
+
+        // Проверяем пересечение с ближайшими задачами
+        if (lowerTask != null && areTasksOverlapping(lowerTask, newTask)) {
+            return true;
+        }
+        if (higherTask != null && areTasksOverlapping(higherTask, newTask)) {
+            return true;
+        }
+
+        return false; // Пересечений нет
+        }
+    }
+
+
+
+
+
+
