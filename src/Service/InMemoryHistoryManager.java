@@ -7,20 +7,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private static class Node{
+    private static class Node {
         Task task;
         Node prev;
         Node next;
-        public Node(Task task){
+
+        public Node(Task task) {
             this.task = task;
         }
     }
+
     private Node head;
     private Node tail;
     private final HashMap<Integer, Node> historyMap = new HashMap<>();
-
-
-
 
 
     @Override
@@ -50,6 +49,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         return history;
     }
+
     private void removeNode(Node node) {
         if (node.prev != null) {
             node.prev.next = node.next;
@@ -62,6 +62,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             tail = node.prev; // Если удаляем хвост, сдвигаем его
         }
     }
+
     @Override
     public void remove(int id) {
         Node node = historyMap.get(id);
