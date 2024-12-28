@@ -1,6 +1,4 @@
 package src.Service;
-
-
 import src.Models.Epic;
 import src.Models.Subtask;
 import src.Models.Task;
@@ -10,9 +8,7 @@ import src.Models.TaskStatus;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-
 public class FileBackedTaskManager extends InMemoryTaskManager {
-
     private final File file;
 
     public FileBackedTaskManager(File file) {
@@ -24,7 +20,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
     // Метод для восстановления задачи из строки
     public Task fromString(String line) {
-
         String[] parts = line.split(",");
         int id = Integer.parseInt(parts[0]);
         TaskType type = TaskType.valueOf(parts[1]);
@@ -43,18 +38,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     // Метод для автосохранения
     public void save() {
         try (BufferedWriter writer = Files.newBufferedWriter(file.toPath())) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write("id,type,name,status,description,epic,startTime,duration\n");
 
             for (Task task : getTasks()) {
                 writer.write(toString(task));
                 writer.newLine();
             }
-
             for (Epic epic : getEpics()) {
                 writer.write(toString(epic));
                 writer.newLine();
             }
-
             for (Subtask subtask : getSubtasks()) {
                 writer.write(toString(subtask));
                 writer.newLine();
@@ -64,7 +57,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-
     @Override
     public int addNewTask(Task task) {
         int id = super.addNewTask(task);
@@ -72,14 +64,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return id;
     }
 
-
     @Override
     public int addNewEpic(Epic epic) {
         int id = super.addNewEpic(epic);
         save();
         return id;
     }
-
 
     @Override
     public int addNewSubtask(Subtask subtask) {

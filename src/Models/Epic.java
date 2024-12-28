@@ -16,7 +16,7 @@ public class Epic extends Task {
         this.endTime = null;
         this.startTime = null;
     }
-    private void recalculateFields() {
+    public void recalculateFields() {
         this.duration = subtasks.stream()
                 .filter(subtask -> subtask.getDuration() != null)
                 .map(Subtask::getDuration)

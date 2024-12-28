@@ -5,23 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bbf4e721-ea23-48e7-9044-1b603944e74f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Test/FileBackedTaskManagerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Test/InMemoryTaskManagerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Test/TaskManagerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/tests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/Test/tests.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/Test/tests.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/src/Models/Epic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/src/Models/Epic.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/src/Models/Subtask.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/src/Models/Subtask.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/src/Models/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/src/Models/Task.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/FileBackedTaskManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/FileBackedTaskManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/FileBackedTaskManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/FileBackedTaskManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/InMemoryHistoryManager$Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/InMemoryHistoryManager$Node.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/InMemoryHistoryManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/InMemoryHistoryManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/InMemoryTaskManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/InMemoryTaskManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/ManagerSaveException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/ManagerSaveException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/Managers.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java-kanban11/src/Service/Managers.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Epic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Epic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Subtask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Subtask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/FileBackedTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/FileBackedTaskManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/InMemoryTaskManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

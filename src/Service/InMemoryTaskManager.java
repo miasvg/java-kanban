@@ -98,6 +98,7 @@ public class InMemoryTaskManager implements TaskManager {
         updateStatus(epic);
         if (!isTaskOverlapping(subtask)){
             prioritizedTasks.add(subtask);
+            epic.recalculateFields();
         }
         return subtask.getId();
     }
@@ -159,9 +160,11 @@ public class InMemoryTaskManager implements TaskManager {
             Epic epic = epics.get(epicId);
             epic.getSubtasks().remove(subtask);
             updateStatus(epic);
+            epic.recalculateFields();
         }
         historyManager.remove(id);
         prioritizedTasks.remove(subtask);
+
     }
 
     @Override
@@ -200,7 +203,6 @@ public class InMemoryTaskManager implements TaskManager {
         subtasks.clear();
     }
 
-
     public void updateStatus(Epic epic) {
         List<Subtask> subtasks = epic.getSubtasks();
         if (subtasks.isEmpty()) {
@@ -230,10 +232,6 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getPrioritizedTasks() {
         return new ArrayList<>(prioritizedTasks);
     }
-    private boolean areTasksOverlapping(Task task1, Task task2) {
-        return !(task1.getEndTime().isBefore(task2.getStartTime()) ||
-                task1.getStartTime().isAfter(task2.getEndTime()));
-    }
     public boolean isTaskOverlapping(Task newTask) {
         if (newTask.getStartTime() == null || newTask.getEndTime() == null) {
             return false; // Если у новой задачи нет времени, пересечения быть не может
@@ -250,8 +248,11 @@ public class InMemoryTaskManager implements TaskManager {
         if (higherTask != null && areTasksOverlapping(higherTask, newTask)) {
             return true;
         }
-
         return false; // Пересечений нет
+        }
+    private boolean areTasksOverlapping(Task task1, Task task2) {
+        return !(task1.getEndTime().isBefore(task2.getStartTime()) ||
+                task1.getStartTime().isAfter(task2.getEndTime()));
         }
     }
 
