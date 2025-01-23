@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bbf4e721-ea23-48e7-9044-1b603944e74f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Test/FileBackedTaskManagerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Test/InMemoryTaskManagerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Test/TaskManagerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Epic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Epic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/FileBackedTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/FileBackedTaskManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java-kanban11.iml" beforeDir="false" afterPath="$PROJECT_DIR$/java-kanban11.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/InMemoryTaskManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/TaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/TaskManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,29 +49,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.java-kanban11.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "true",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "sprint__8-solution-time-and-duration",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.java-kanban11.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;sprint__9-solution-http-api&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/artem/IdeaProjects/m1-t25-api&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="src.Service" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="java-kanban11" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="src.Main" />
@@ -102,6 +105,10 @@
       <updated>1734370618068</updated>
       <workItem from="1734370620682" duration="4832000" />
       <workItem from="1734376988160" duration="7028000" />
+      <workItem from="1737557648718" duration="2137000" />
+      <workItem from="1737564296559" duration="412000" />
+      <workItem from="1737565071329" duration="1448000" />
+      <workItem from="1737566777495" duration="5234000" />
     </task>
     <servers />
   </component>

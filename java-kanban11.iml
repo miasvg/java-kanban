@@ -8,5 +8,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="junit.jupiter" level="project" />
+    <orderEntry type="library" name="src" level="project" />
+    <orderEntry type="library" name="m1-t25-api" level="project" />
+    <orderEntry type="library" name="gson-2.11.0" level="project" />
   </component>
 </module>

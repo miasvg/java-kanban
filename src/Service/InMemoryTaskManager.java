@@ -32,6 +32,8 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(epics.values());
     }
 
+
+
     @Override
     public List<Subtask> getEpicSubtasks(int epicId) {
         Epic epic = epics.get(epicId);
@@ -67,6 +69,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return epic;
     }
+
 
     @Override
     public int addNewTask(Task task) {
@@ -254,6 +257,7 @@ public class InMemoryTaskManager implements TaskManager {
         return !(task1.getEndTime().isBefore(task2.getStartTime()) ||
                 task1.getStartTime().isAfter(task2.getEndTime()));
         }
+
     }
 
 
