@@ -1,9 +1,7 @@
-package src.Service;
-
+package src.Service.Handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -27,14 +25,8 @@ abstract class BaseHttpHandler implements HttpHandler {
         sendText(exchange, "{\"error\":\"" + message + "\"}", 500);
     }
     protected int extractIdFromPath(String path) throws NumberFormatException {
-        // Убираем базовый путь из полного пути
-        String idPart = path.substring(basePath.length());
-        // Удаляем ведущий слэш, если он есть
-        if (idPart.startsWith("/")) {
-            idPart = idPart.substring(1);
-        }
-        // Преобразуем оставшуюся часть в число
-        return Integer.parseInt(idPart);
+        // Разделяем путь по "/"
+        String[] parts = path.split("/");
+        return Integer.parseInt(parts[parts.length - 1]);
     }
-
 }

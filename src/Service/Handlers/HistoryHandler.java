@@ -1,9 +1,9 @@
-package src.Service;
+package src.Service.Handlers;
 
-import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import src.Models.Task;
+import src.Service.HistoryManager;
 
 import java.io.IOException;
 import java.util.List;

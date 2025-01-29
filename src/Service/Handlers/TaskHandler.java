@@ -1,7 +1,8 @@
-package src.Service;
+package src.Service.Handlers;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import src.Models.Task;
+import src.Service.TaskManager;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +13,7 @@ public class TaskHandler extends BaseHttpHandler {
     private final Gson gson;
 
     public TaskHandler(TaskManager taskManager, Gson gson) {
+
         this.taskManager = taskManager;
         this.gson = gson;
     }

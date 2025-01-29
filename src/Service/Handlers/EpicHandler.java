@@ -1,11 +1,10 @@
-package src.Service;
+package src.Service.Handlers;
 
-import com.sun.net.httpserver.HttpHandler;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import src.Models.Epic;
 import src.Models.Subtask;
-
+import src.Service.TaskManager;
 import java.io.IOException;
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class EpicHandler extends BaseHttpHandler {
     private final TaskManager taskManager;
     private final Gson gson = new Gson();
 
-    public EpicHandler(TaskManager taskManager) {
+    public EpicHandler( TaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
