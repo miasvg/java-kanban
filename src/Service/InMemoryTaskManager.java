@@ -5,21 +5,19 @@ import src.Models.Subtask;
 import src.Models.Task;
 import src.Models.TaskStatus;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
     private static final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
+    private final NavigableSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime, Comparator.nullsLast(Comparator.naturalOrder())));
     private static final HistoryManager historyManager = Managers.getDefaultHistory(); // Используем HistoryManager
     private static int allTasksId = 0;
 
     @Override
-    public  List<Task> getTasks() {
+    public List<Task> getTasks() {
         return new ArrayList<>(tasks.values());
 
     }
@@ -34,6 +32,8 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(epics.values());
     }
 
+
+
     @Override
     public List<Subtask> getEpicSubtasks(int epicId) {
         Epic epic = epics.get(epicId);
@@ -44,7 +44,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public  Task getTask(int id) {
+    public Task getTask(int id) {
         Task task = tasks.get(id);
         if (task != null) {
             historyManager.add(task);  // Добавляем задачу в историю
@@ -70,10 +70,14 @@ public class InMemoryTaskManager implements TaskManager {
         return epic;
     }
 
+
     @Override
-    public  int addNewTask(Task task) {
+    public int addNewTask(Task task) {
         task.setId(allTasksId++);
         tasks.put(task.getId(), task);
+        if (!isTaskOverlapping(task)){
+            prioritizedTasks.add(task);
+        }
         return task.getId();
     }
 
@@ -83,9 +87,6 @@ public class InMemoryTaskManager implements TaskManager {
         epics.put(epic.getId(), epic);
         return epic.getId();
     }
-
-
-
 
 
     @Override
@@ -98,6 +99,10 @@ public class InMemoryTaskManager implements TaskManager {
         epic.getSubtasks().add(subtask);
         subtasks.put(subtask.getId(), subtask);
         updateStatus(epic);
+        if (!isTaskOverlapping(subtask)){
+            prioritizedTasks.add(subtask);
+            epic.recalculateFields();
+        }
         return subtask.getId();
     }
 
@@ -137,6 +142,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteTask(int id) {
         tasks.remove(id);
         historyManager.remove(id);
+        prioritizedTasks.remove(id);
     }
 
     @Override
@@ -157,8 +163,11 @@ public class InMemoryTaskManager implements TaskManager {
             Epic epic = epics.get(epicId);
             epic.getSubtasks().remove(subtask);
             updateStatus(epic);
+            epic.recalculateFields();
         }
         historyManager.remove(id);
+        prioritizedTasks.remove(subtask);
+
     }
 
     @Override
@@ -180,11 +189,11 @@ public class InMemoryTaskManager implements TaskManager {
         }
         subtasks.clear();
     }
+
     @Override
     public void deleteEpics() {
         for (Epic epic : epics.values()) {
             historyManager.remove(epic.getId());
-
 
             for (Subtask subtask : subtasks.values()) {
                 if (subtask.getEpicId() == epic.getId()) {
@@ -193,12 +202,9 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
 
-
         epics.clear();
         subtasks.clear();
     }
-
-
 
     public void updateStatus(Epic epic) {
         List<Subtask> subtasks = epic.getSubtasks();
@@ -226,4 +232,36 @@ public class InMemoryTaskManager implements TaskManager {
             epic.setStatus(TaskStatus.IN_PROGRESS);
         }
     }
-}
+    public List<Task> getPrioritizedTasks() {
+        return new ArrayList<>(prioritizedTasks);
+    }
+    public boolean isTaskOverlapping(Task newTask) {
+        if (newTask.getStartTime() == null || newTask.getEndTime() == null) {
+            return false; // Если у новой задачи нет времени, пересечения быть не может
+        }
+
+        // Получаем ближайшие задачи до и после новой задачи
+        Task lowerTask = prioritizedTasks.lower(newTask);
+        Task higherTask = prioritizedTasks.higher(newTask);
+
+        // Проверяем пересечение с ближайшими задачами
+        if (lowerTask != null && areTasksOverlapping(lowerTask, newTask)) {
+            return true;
+        }
+        if (higherTask != null && areTasksOverlapping(higherTask, newTask)) {
+            return true;
+        }
+        return false; // Пересечений нет
+        }
+    private boolean areTasksOverlapping(Task task1, Task task2) {
+        return !(task1.getEndTime().isBefore(task2.getStartTime()) ||
+                task1.getStartTime().isAfter(task2.getEndTime()));
+        }
+
+    }
+
+
+
+
+
+
